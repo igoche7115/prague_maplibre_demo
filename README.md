@@ -1,59 +1,77 @@
-# MapLibre Vehicle Visualization
+# Prague MapLibre Demo
 
-## Overview
-This project visualizes vehicle locations on a map using MapLibre GL.
+A React + TypeScript demo built with MapLibre that displays approximately 300 mocked locations across Prague, including clustered regular points and 3 always-visible special points with a pulsing highlight.
 
-It demonstrates clustering, special-case rendering, and animated highlighting of selected points.
+## Live Demo
 
----
+GitHub Pages deployment:
 
-## Features
+`https://igoche7115.github.io/prague_maplibre_demo/`
 
-### Clustering
-- Groups nearby vehicle points dynamically
-- Displays count of clustered items
-- Expands smoothly on zoom
+## Repository
 
-### Normal Vehicles
-- Rendered as small green markers
-- Included in clustering logic
+GitHub repository:
 
-### Special Vehicles
-- First 3 vehicles are treated as "priority"
-- Rendered as distinct orange markers
-- Excluded from clustering for visibility
-
-### Animation
-- Custom pulsing effect using canvas rendering
-- Highlights important vehicles clearly
+`https://github.com/igoche7115/prague_maplibre_demo`
 
 ---
 
-## Technical Approach
+## Project Goal
 
-- Built with React + Vite
-- Map rendering via MapLibre GL
-- Data structured as GeoJSON
-- Layer-based rendering strategy:
-  - Cluster layer
-  - Cluster count labels
-  - Unclustered points
-  - Special points
-  - Animated pulse layer
+The goal of this project is to demonstrate a small but complete frontend mapping solution that focuses on:
+
+- rendering a map centered on Prague
+- handling many points efficiently
+- clustering nearby points
+- distinguishing special points from regular points
+- organizing the code in a maintainable way
 
 ---
 
-## Key Decisions
+## Tech Stack
 
-- **Separated datasets** (normal vs special) to control behavior
-- **Used clustering** to handle large datasets efficiently
-- **Implemented animation manually** for better control
-- **Avoided emoji rendering** due to cross-browser inconsistencies
+- **React**
+- **TypeScript**
+- **Vite**
+- **MapLibre GL**
+- **GitHub Pages** for deployment
 
 ---
 
-## How to Run
+## Features Implemented
+
+### 1. Map centered on Prague
+The map loads with Prague as the initial center and a suitable starting zoom level.
+
+### 2. Approximately 300 mocked locations
+Location data is stored in a separate JSON file and imported into the app.
+
+### 3. Uneven point distribution
+The dataset simulates a more realistic distribution:
+- some isolated points
+- some grouped points that naturally form clusters
+
+### 4. Clustering for regular points
+Regular points are rendered through a clustered GeoJSON source, so nearby points group together when zoomed out and separate when zoomed in.
+
+### 5. Three special points
+Three points are treated as special:
+- they are excluded from clustering
+- they remain individually visible
+- they use emoji markers
+
+### 6. Pulsing highlight effect
+Each special point includes a pulsing blue highlight that repeats continuously.
+
+### 7. Live deployment
+The project is deployed to GitHub Pages for easy review.
+
+---
+
+## How to Run the Project Locally
+
+### 1. Clone the repository
 
 ```bash
-npm install
-npm run dev
+git clone https://github.com/igoche7115/prague_maplibre_demo.git
+cd prague_maplibre_demo/map-demo

@@ -1,0 +1,16 @@
+.map-view__container {
+  width: 100%;
+  height: 100vh;
+}
+
+.map-view__special-marker {
+  font-size: 26px;
+  line-height: 26px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-2px);
+  pointer-events: none;
+}
