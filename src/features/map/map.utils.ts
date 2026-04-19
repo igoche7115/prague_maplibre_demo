@@ -10,19 +10,21 @@ import type {
   LocationPoint,
   LocationProperties,
 } from "../../types/location";
-
-export const PRAGUE_CENTER: Coordinates = [14.4378, 50.0755];
-export const INITIAL_ZOOM = 11;
-export const SPECIAL_POINTS_COUNT = 3;
-
-export const PULSE_IMAGE_ID = "pulse";
-export const LOCATIONS_SOURCE_ID = "locations";
-export const SPECIAL_SOURCE_ID = "special";
-
-export const CLUSTERS_LAYER_ID = "clusters";
-export const CLUSTER_COUNT_LAYER_ID = "cluster-count";
-export const UNCLUSTERED_POINT_LAYER_ID = "unclustered-point";
-export const PULSE_LAYER_ID = "pulse-layer";
+import {
+  CLUSTER_COUNT_LAYER_CONFIG,
+  CLUSTERS_LAYER_CONFIG,
+  CLUSTER_SOURCE_OPTIONS,
+  CLUSTER_COUNT_LAYER_ID,
+  CLUSTERS_LAYER_ID,
+  LOCATIONS_SOURCE_ID,
+  PULSE_IMAGE_ID,
+  PULSE_LAYER_CONFIG,
+  PULSE_LAYER_ID,
+  SPECIAL_POINTS_COUNT,
+  SPECIAL_SOURCE_ID,
+  UNCLUSTERED_POINT_LAYER_CONFIG,
+  UNCLUSTERED_POINT_LAYER_ID,
+} from "./map.config";
 
 function toCoordinates(point: LocationPoint): Coordinates {
   return [point.lng, point.lat];
@@ -138,57 +140,22 @@ export function addClusterLayers(
   map.addSource(LOCATIONS_SOURCE_ID, {
     type: "geojson",
     data: normalGeoJSON,
-    cluster: true,
-    clusterMaxZoom: 14,
-    clusterRadius: 50,
+    ...CLUSTER_SOURCE_OPTIONS,
   });
 
   map.addLayer({
-    id: CLUSTERS_LAYER_ID,
-    type: "circle",
+    ...CLUSTERS_LAYER_CONFIG,
     source: LOCATIONS_SOURCE_ID,
-    filter: ["has", "point_count"],
-    paint: {
-      "circle-color": "#2563eb",
-      "circle-radius": [
-        "step",
-        ["get", "point_count"],
-        15,
-        20,
-        20,
-        50,
-        25,
-      ],
-      "circle-stroke-width": 1,
-      "circle-stroke-color": "#ffffff",
-    },
   });
 
   map.addLayer({
-    id: CLUSTER_COUNT_LAYER_ID,
-    type: "symbol",
+    ...CLUSTER_COUNT_LAYER_CONFIG,
     source: LOCATIONS_SOURCE_ID,
-    filter: ["has", "point_count"],
-    layout: {
-      "text-field": "{point_count}",
-      "text-size": 12,
-    },
-    paint: {
-      "text-color": "#ffffff",
-    },
   });
 
   map.addLayer({
-    id: UNCLUSTERED_POINT_LAYER_ID,
-    type: "circle",
+    ...UNCLUSTERED_POINT_LAYER_CONFIG,
     source: LOCATIONS_SOURCE_ID,
-    filter: ["!", ["has", "point_count"]],
-    paint: {
-      "circle-color": "#10b981",
-      "circle-radius": 5,
-      "circle-stroke-width": 1,
-      "circle-stroke-color": "#ffffff",
-    },
   });
 }
 
@@ -210,12 +177,8 @@ export function addSpecialPointLayers(
   }
 
   map.addLayer({
-    id: PULSE_LAYER_ID,
-    type: "symbol",
+    ...PULSE_LAYER_CONFIG,
     source: SPECIAL_SOURCE_ID,
-    layout: {
-      "icon-image": PULSE_IMAGE_ID,
-    },
   });
 }
 
